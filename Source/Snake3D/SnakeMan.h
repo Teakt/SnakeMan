@@ -16,6 +16,8 @@
 
 #include "Blueprint/UserWidget.h"
 
+#include "Blueprint/UserWidget.h"
+
 #include "SnakeMan.generated.h"
 
 UCLASS()
@@ -27,6 +29,11 @@ public:
 	// Sets default values for this character's properties
 	ASnakeMan();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		USpringArmComponent* CameraBoom;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		UCameraComponent* FollowCamera;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

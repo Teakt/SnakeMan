@@ -59,15 +59,33 @@ void ASnakeMan::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	
+	PlayerInputComponent->BindAxis("MoveForward", this, &ASnakeMan::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ASnakeMan::MoveRight);
+
 }
 
 void ASnakeMan::MoveForward(float Axis)
 {
+	if (!bDead) {
 
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Axis);
+	}
 }
 
 void ASnakeMan::MoveRight(float Axis)
 {
+	if (!bDead) {
 
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(Direction, Axis);
+	}
 }
 

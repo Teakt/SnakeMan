@@ -29,7 +29,11 @@ ASnakeMan::ASnakeMan()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false; 
+
+	bDead = false;
 }
+
+
 
 // Called when the game starts or when spawned
 void ASnakeMan::BeginPlay()
@@ -49,6 +53,21 @@ void ASnakeMan::Tick(float DeltaTime)
 void ASnakeMan::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+}
+
+void ASnakeMan::MoveForward(float Axis)
+{
+
+}
+
+void ASnakeMan::MoveRight(float Axis)
+{
 
 }
 

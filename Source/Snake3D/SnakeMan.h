@@ -40,6 +40,16 @@ public:
 	void MoveRight(float Axis);
 
 	bool bDead;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float Power;
+
+	UPROPERTY(EditAnywhere)
+		float Power_Treshhold;
+
+	UFUNCTION()
+		void OnBeginOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -2,6 +2,9 @@
 
 
 #include "SnakeMan.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "GameFrameWork/Actor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASnakeMan::ASnakeMan()
@@ -42,6 +45,8 @@ ASnakeMan::ASnakeMan()
 
 
 
+
+
 // Called when the game starts or when spawned
 void ASnakeMan::BeginPlay()
 {
@@ -63,6 +68,22 @@ void ASnakeMan::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	Power -= DeltaTime * Power_Treshhold;
+
+	if (Power <= 0) {
+
+		if (!bDead) {
+
+			bDead = true;
+
+			GetMesh()->SetSimulatePhysics(true);
+
+			FTimerHandle UnusedHandle;
+			GetWorldTimerManager().SetTimer(
+				UnusedHandle, this, &ASnakeMan::RestartGame, 3.0f, false);
+
+		}
+
+	}
 }
 
 // Called to bind functionality to input
@@ -103,6 +124,13 @@ void ASnakeMan::MoveRight(float Axis)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(Direction, Axis);
 	}
+}
+
+void ASnakeMan::RestartGame()
+{
+
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+
 }
 
 void ASnakeMan::OnBeginOverlap(UPrimitiveComponent* HitComp, 

@@ -50,6 +50,14 @@ public:
 	UFUNCTION()
 		void OnBeginOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UPROPERTY(EditAnywhere, Category = "UI HUD")
+		TSubclassOf<UUserWidget> Player_Power_Widget_Class;
+	UUserWidget* Player_Power_Widget;
+
+	void RestartGame();
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
